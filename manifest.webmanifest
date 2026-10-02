@@ -1,0 +1,10 @@
+{
+  "name": "Chlorine Analyzer",
+  "short_name": "Chlorine",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f8fc",
+  "theme_color": "#1268d5",
+  "description": "Water quality and chlorine measurement dashboard",
+  "icons": []
+}

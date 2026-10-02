@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1268d5">
+  <meta name="description" content="Chlorine Analyzer — water quality measurement dashboard">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <title>Chlorine Analyzer</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">Cl</div>
+      <div><strong>Chlorine Analyzer</strong><small>WATER QUALITY MONITOR</small></div>
+    </div>
+    <button class="icon-btn" id="settingsQuick" aria-label="Settings">⚙</button>
+  </header>
+
+  <main>
+    <section class="page active" id="dashboardPage">
+      <div class="welcome">
+        <div><p class="eyebrow">DEVICE OVERVIEW</p><h1>Good day</h1><p class="muted">Your water quality at a glance.</p></div>
+        <span class="pill offline" id="connectionPill"><i></i> Not connected</span>
+      </div>
+
+      <article class="hero-card">
+        <div class="hero-head"><span>FREE CHLORINE</span><span class="live-dot">● DEMO DATA</span></div>
+        <div class="reading"><strong id="mainReading">0.00</strong><span>mg/L</span></div>
+        <p class="hero-note">Latest sample measurement</p>
+        <div class="hero-bottom"><span id="readingStatus">Waiting for measurement</span><span id="lastMeasured">No readings yet</span></div>
+      </article>
+
+      <div class="section-heading"><h2>Measurement channels</h2><span class="muted">Optical method</span></div>
+      <div class="channel-grid">
+        <article class="channel-card"><div class="channel-icon">🔴</div><div><b>DPD channel</b><strong>520 <small>nm</small></strong><span class="muted">Free chlorine</span></div></article>
+        <article class="channel-card"><div class="channel-icon blue-icon">🔵</div><div><b>OT channel</b><strong>440 <small>nm</small></strong><span class="muted">Alternate method</span></div></article>
+      </div>
+
+      <div class="section-heading"><h2>Quick actions</h2></div>
+      <div class="action-grid">
+        <button class="action-card" data-go="measure"><span>＋</span><b>New measurement</b><small>Start a sample test</small></button>
+        <button class="action-card" data-go="device"><span>⌁</span><b>Connect device</b><small>Bluetooth setup</small></button>
+      </div>
+
+      <div class="section-heading"><h2>Recent activity</h2><button class="text-btn" data-go="history">View all</button></div>
+      <div id="recentList" class="list-card"><div class="empty">No measurements saved yet.</div></div>
+    </section>
+
+    <section class="page" id="measurePage">
+      <p class="eyebrow">SAMPLE TEST</p><h1>New measurement</h1>
+      <p class="muted">Choose the optical channel and record a sample.</p>
+      <div class="form-card">
+        <label for="channelSelect">Measurement channel</label>
+        <select id="channelSelect"><option value="DPD">DPD · 520 nm</option><option value="OT">OT · 440 nm</option></select>
+        <label for="sampleName">Sample name / ID</label>
+        <input id="sampleName" placeholder="e.g. Tank-01">
+        <label for="sampleLocation">Sample location</label>
+        <input id="sampleLocation" placeholder="e.g. Main water tank">
+        <div class="demo-notice"><b>Prototype mode</b><br>This app is not connected to the analyzer yet. You can create clearly labelled demo records to test the interface.</div>
+        <button class="primary-btn full" id="demoMeasure">Generate demo measurement</button>
+      </div>
+      <div class="info-card"><b>Measurement workflow</b><p>Insert vial → select channel → run device measurement → review result → save report.</p></div>
+    </section>
+
+    <section class="page" id="historyPage">
+      <p class="eyebrow">YOUR RECORDS</p><h1>Measurement history</h1>
+      <p class="muted">Measurements saved on this device.</p>
+      <div class="toolbar"><span id="historyCount">0 records</span><button class="text-btn" id="exportCsv">Export CSV</button></div>
+      <div id="historyList" class="list-card"><div class="empty">Your saved measurements will appear here.</div></div>
+    </section>
+
+    <section class="page" id="devicePage">
+      <p class="eyebrow">HARDWARE</p><h1>Device connection</h1>
+      <div class="device-card">
+        <div class="device-illustration">⌁</div>
+        <h2>Chlorine Analyzer</h2>
+        <span class="pill offline" id="deviceStatus"><i></i> Not connected</span>
+        <p class="muted center">Hardware connection will be enabled after ESP32 firmware and communication testing.</p>
+        <button class="primary-btn full" id="connectBtn">Connection setup</button>
+        <p class="tiny muted center">Demo interface only — no Bluetooth connection is active.</p>
+      </div>
+      <div class="info-card"><b>Planned connection</b><p>ESP32-C3 / ESP32 → Bluetooth Low Energy (BLE) for local setup and measurements. Wi-Fi cloud sync can be added later.</p></div>
+      <div class="info-card warning-card"><b>iPhone compatibility note</b><p>iOS Safari does not support the Web Bluetooth API. The app interface can be installed on iPhone as a PWA, but direct BLE control will need a native iOS/Android app wrapper or another supported connection method.</p></div>
+    </section>
+
+    <section class="page" id="settingsPage">
+      <p class="eyebrow">PREFERENCES</p><h1>Settings</h1>
+      <div class="settings-card">
+        <div class="setting-row"><div><b>App name</b><small>Chlorine Analyzer</small></div><span>›</span></div>
+        <div class="setting-row"><div><b>Measurement unit</b><small>mg/L (ppm)</small></div><span>›</span></div>
+        <div class="setting-row"><div><b>DPD wavelength</b><small>520 nm</small></div><span>›</span></div>
+        <div class="setting-row"><div><b>OT wavelength</b><small>440 nm</small></div><span>›</span></div>
+        <div class="setting-row"><div><b>Data storage</b><small>Stored locally in this browser</small></div><span>●</span></div>
+      </div>
+      <div class="info-card"><b>About this prototype</b><p>Version 0.1 · Interface prototype. Demo readings are simulated and must not be used for water safety decisions.</p></div>
+      <button class="secondary-btn full" id="clearData">Clear demo history</button>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-page="dashboard"><span>⌂</span><small>Home</small></button>
+    <button class="nav-item" data-page="measure"><span>＋</span><small>Measure</small></button>
+    <button class="nav-item" data-page="history"><span>▤</span><small>History</small></button>
+    <button class="nav-item" data-page="device"><span>⌁</span><small>Device</small></button>
+    <button class="nav-item" data-page="settings"><span>⚙</span><small>Settings</small></button>
+  </nav>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
